@@ -1,0 +1,11 @@
+{
+  "name": "prima-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Shopify headless monorepo",
+  "scripts": {
+    "dev": "pnpm --filter @prima/frontend dev",
+    "create-metafields": "pnpm --filter @prima/shopify-config create-metafields",
+    "build": "pnpm -r build"
+  }
+}
