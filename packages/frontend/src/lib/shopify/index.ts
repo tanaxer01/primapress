@@ -13,16 +13,25 @@ import {
   removeFromCartMutation,
 } from "./mutations/cart";
 import { getCartQuery } from "./queries/cart";
+import {
+  getAboutUsQuery,
+  getHeroGalleryQuery,
+} from "./queries/metaobject";
 import { getProductQuery, getProductsQuery } from "./queries/product";
 import type {
+  AboutUs,
   Cart,
   Connection,
+  GalleryImage,
+  HeroGallery,
   Image,
   Product,
+  ShopifyAboutUsOperation,
   ShopifyAddToCartOperation,
   ShopifyCart,
   ShopifyCartOperation,
   ShopifyCreateCartOperation,
+  ShopifyHeroGalleryOperation,
   ShopifyProduct,
   ShopifyProductOperation,
   ShopifyProductsOperation,
@@ -255,4 +264,56 @@ export async function getProducts({
   });
 
   return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
+}
+
+export async function getHeroGallery(): Promise<HeroGallery | null> {
+  "use cache";
+  cacheTag(TAGS.products);
+  cacheLife("days");
+
+  const res = await shopifyFetch<ShopifyHeroGalleryOperation>({
+    query: getHeroGalleryQuery,
+  });
+
+  const metaobject = res.body.data.metaobjects.edges[0]?.node;
+  if (!metaobject) return null;
+
+  const leftField = metaobject.fields.find((f) => f.key === "left_images");
+  const rightField = metaobject.fields.find((f) => f.key === "right_images");
+
+  const extractImages = (
+    field: typeof leftField
+  ): GalleryImage[] => {
+    if (!field?.references) return [];
+    return field.references.edges.map((edge) => ({
+      url: edge.node.image.url,
+      altText: edge.node.image.altText,
+      width: edge.node.image.width,
+      height: edge.node.image.height,
+    }));
+  };
+
+  return {
+    leftImages: extractImages(leftField),
+    rightImages: extractImages(rightField),
+  };
+}
+
+export async function getAboutUs(): Promise<AboutUs | null> {
+  "use cache";
+  cacheTag(TAGS.products);
+  cacheLife("days");
+
+  const res = await shopifyFetch<ShopifyAboutUsOperation>({
+    query: getAboutUsQuery,
+  });
+
+  const metaobject = res.body.data.metaobjects.edges[0]?.node;
+  if (!metaobject) return null;
+
+  const contentField = metaobject.fields.find((f) => f.key === "content");
+
+  return {
+    content: contentField?.value ?? "",
+  };
 }

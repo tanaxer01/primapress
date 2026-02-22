@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "create-metafields": "tsx src/create-metafields.ts",
+    "create-metaobjects": "tsx src/create-metaobjects.ts",
     "build": "tsc"
   },
   "dependencies": {

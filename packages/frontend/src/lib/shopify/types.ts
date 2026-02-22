@@ -290,3 +290,68 @@ export type ShopifyMetafieldDefinitionInput = {
   type: string;
   validation: [];
 };
+
+// --- Metaobject types ---
+
+export type GalleryImage = {
+  url: string;
+  altText: string | null;
+  width: number;
+  height: number;
+};
+
+export type HeroGallery = {
+  leftImages: GalleryImage[];
+  rightImages: GalleryImage[];
+};
+
+export type AboutUs = {
+  content: string;
+};
+
+export type ShopifyMetaobjectImage = {
+  image: {
+    url: string;
+    altText: string | null;
+    width: number;
+    height: number;
+  };
+};
+
+export type ShopifyHeroGalleryOperation = {
+  data: {
+    metaobjects: {
+      edges: Array<{
+        node: {
+          id: string;
+          handle: string;
+          fields: Array<{
+            key: string;
+            references?: {
+              edges: Array<{
+                node: ShopifyMetaobjectImage;
+              }>;
+            };
+          }>;
+        };
+      }>;
+    };
+  };
+};
+
+export type ShopifyAboutUsOperation = {
+  data: {
+    metaobjects: {
+      edges: Array<{
+        node: {
+          id: string;
+          handle: string;
+          fields: Array<{
+            key: string;
+            value: string | null;
+          }>;
+        };
+      }>;
+    };
+  };
+};

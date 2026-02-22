@@ -4,22 +4,19 @@ import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 
-type GalleryImage = {
-  src: string;
-  alt: string;
-};
+import type { GalleryImage } from "@/lib/shopify/types";
 
-// Mock images until metaobject integration is done
-const leftGalleryImages: GalleryImage[] = [
-  { src: "/placeholder-1.jpg", alt: "Gallery left 1" },
-  { src: "/placeholder-2.jpg", alt: "Gallery left 2" },
-  { src: "/placeholder-3.jpg", alt: "Gallery left 3" },
+// Fallback mock images used when the metaobject has not been populated yet
+const fallbackLeftImages: GalleryImage[] = [
+  { url: "/placeholder-1.jpg", altText: "Gallery left 1", width: 1200, height: 800 },
+  { url: "/placeholder-2.jpg", altText: "Gallery left 2", width: 1200, height: 800 },
+  { url: "/placeholder-3.jpg", altText: "Gallery left 3", width: 1200, height: 800 },
 ];
 
-const rightGalleryImages: GalleryImage[] = [
-  { src: "/placeholder-4.jpg", alt: "Gallery right 1" },
-  { src: "/placeholder-5.jpg", alt: "Gallery right 2" },
-  { src: "/placeholder-6.jpg", alt: "Gallery right 3" },
+const fallbackRightImages: GalleryImage[] = [
+  { url: "/placeholder-4.jpg", altText: "Gallery right 1", width: 1200, height: 800 },
+  { url: "/placeholder-5.jpg", altText: "Gallery right 2", width: 1200, height: 800 },
+  { url: "/placeholder-6.jpg", altText: "Gallery right 3", width: 1200, height: 800 },
 ];
 
 function Gallery({ images }: { images: GalleryImage[] }) {
@@ -37,8 +34,8 @@ function Gallery({ images }: { images: GalleryImage[] }) {
     <div className="relative h-full w-1/2 overflow-hidden bg-neutral-100">
       <div className="relative h-full w-full">
         <Image
-          src={images[current].src}
-          alt={images[current].alt}
+          src={images[current].url}
+          alt={images[current].altText ?? ""}
           fill
           className="object-cover"
           sizes="50vw"
@@ -68,15 +65,24 @@ function Gallery({ images }: { images: GalleryImage[] }) {
   );
 }
 
-export function Hero() {
+export function Hero({
+  leftImages,
+  rightImages,
+}: {
+  leftImages?: GalleryImage[];
+  rightImages?: GalleryImage[];
+}) {
+  const left = leftImages?.length ? leftImages : fallbackLeftImages;
+  const right = rightImages?.length ? rightImages : fallbackRightImages;
+
   function scrollToContent() {
     window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
   }
 
   return (
     <section className="relative h-screen w-full flex">
-      <Gallery images={leftGalleryImages} />
-      <Gallery images={rightGalleryImages} />
+      <Gallery images={left} />
+      <Gallery images={right} />
 
       {/* Scroll down arrow centered at bottom between both galleries */}
       <button
