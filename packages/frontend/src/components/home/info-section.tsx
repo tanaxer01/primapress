@@ -7,7 +7,8 @@ export function InfoSection({ content }: { content?: string }) {
   const paragraphs = text.split(/\n\s*\n/).filter(Boolean);
 
   return (
-    <section id="info" className="py-16">
+    <section id="info" className="px-5 py-16">
+      <h2 className="mb-8 text-lg font-semibold">Acerca de nosotros</h2>
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         <div className="text-sm leading-relaxed">
           {paragraphs

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { connection } from "next/server";
+import { PriceDisplay } from "@/components/ui/price-display";
 import { defaultSort, sorting } from "@/lib/constants";
 import { getProducts } from "@/lib/shopify";
 
@@ -22,7 +23,13 @@ export default async function CatalogPage() {
               height={item.images[0].height}
               alt={item.title}
             />
-            <div className="absolute bottom-1 w-full p-2">{item.title}</div>
+            <div className="absolute bottom-1 w-full p-2 flex justify-between items-end">
+              <span>{item.title}</span>
+              <PriceDisplay
+                price={item.priceRange.minVariantPrice}
+                compareAtPrice={item.compareAtPriceRange?.minVariantPrice}
+              />
+            </div>
           </div>
         </Link>
       ))}

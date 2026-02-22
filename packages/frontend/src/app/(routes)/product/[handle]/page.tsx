@@ -2,6 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { AddToCart } from "@/components/cart/add-to-cart";
 import { ProductDescription } from "@/components/product/product-description";
+import { PriceDisplay } from "@/components/ui/price-display";
 import { getProduct } from "@/lib/shopify";
 
 export default async function ProductPage(props: {
@@ -38,7 +39,13 @@ export default async function ProductPage(props: {
       </div>
       <div className="h-[40%] md:h-screen w-full md:w-[40%] p-5 overflow-y-scroll space-y-4">
         <p className="text-lg font-semibold">{product.title}</p>
-        <AddToCart product={product} />
+        <div className="flex flex-col items-start gap-2">
+          <PriceDisplay
+            price={product.priceRange.minVariantPrice}
+            compareAtPrice={product.compareAtPriceRange?.minVariantPrice}
+          />
+          <AddToCart product={product} />
+        </div>
         <div>
           {Object.values(product.metafields)
             .filter((item) => item?.key)
