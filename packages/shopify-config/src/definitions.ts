@@ -22,6 +22,27 @@ export interface MetafieldDefinition {
 
 export const metafieldDefinitions: MetafieldDefinition[] = [
   {
+    name: "ID",
+    key: "id_libro",
+    namespace: "custom",
+    type: "single_line_text_field",
+    description: "Identificador del libro",
+  },
+  {
+    name: "TableImages",
+    key: "table_images",
+    namespace: "custom",
+    type: "list.file_reference",
+    description: "Imágenes mostradas en la vista de detalle de la tabla",
+  },
+  {
+    name: "TableText",
+    key: "table_text",
+    namespace: "custom",
+    type: "multi_line_text_field",
+    description: "Texto mostrado en el lado derecho de la vista de detalle de la tabla",
+  },
+  {
     name: "Autor",
     key: "autor",
     namespace: "custom",

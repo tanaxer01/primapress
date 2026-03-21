@@ -145,6 +145,20 @@ export type ShopifyProduct = {
   tags: string[];
   updatedAt: string;
   metafields: Metafield[];
+  tableImages?: {
+    references: {
+      edges: Array<{
+        node: {
+          image: {
+            url: string;
+            altText: string | null;
+            width: number;
+            height: number;
+          };
+        };
+      }>;
+    };
+  } | null;
 };
 
 export type ShopifyCartOperation = {

@@ -82,6 +82,7 @@ const productFragment = /* GraphQL */ `
       }
     }
     metafields(identifiers: [
+      { namespace: "custom", key: "id_libro" }
       { namespace: "custom", key: "autor" }
       { namespace: "custom", key: "isbn" }
       { namespace: "custom", key: "formato" }
@@ -90,9 +91,26 @@ const productFragment = /* GraphQL */ `
       { namespace: "custom", key: "idioma" }
       { namespace: "custom", key: "impresores" }
       { namespace: "custom", key: "ano" }
+      { namespace: "custom", key: "table_text" }
     ]) {
       key
       value
+    }
+    tableImages: metafield(namespace: "custom", key: "table_images") {
+      references(first: 20) {
+        edges {
+          node {
+            ... on MediaImage {
+              image {
+                url
+                altText
+                width
+                height
+              }
+            }
+          }
+        }
+      }
     }
     tags
     updatedAt

@@ -76,11 +76,11 @@ export function Hero({
   const right = rightImages?.length ? rightImages : fallbackRightImages;
 
   function scrollToContent() {
-    window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+    window.scrollTo({ top: window.innerHeight * 0.9, behavior: "smooth" });
   }
 
   return (
-    <section className="relative h-screen w-full flex">
+    <section className="relative h-[90vh] w-full flex">
       <Gallery images={left} />
       <Gallery images={right} />
 

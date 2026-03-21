@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { ProductDescription } from "@/components/product/product-description";
 import { PriceDisplay } from "@/components/ui/price-display";
@@ -29,10 +29,11 @@ const BREAKPOINT_CLASSES: Record<string, string> = {
   xl: "hidden xl:table-cell",
 };
 
-// Total number of visible columns: Título + metafields + Precio + Más info
-const TOTAL_COLUMNS = 1 + METAFIELD_COLUMNS.length + 2;
+// Total number of visible columns: ID + Título + metafields + Precio + Más info
+const TOTAL_COLUMNS = 2 + METAFIELD_COLUMNS.length + 2;
 
 const FIELD_MAPPER: Record<string, string> = {
+  id_libro: "ID",
   autor: "Autor",
   isbn: "Isbn",
   formato: "Formato",
@@ -42,6 +43,9 @@ const FIELD_MAPPER: Record<string, string> = {
   impresores: "Impresores",
   ano: "Año",
 };
+
+// Keys that are used internally but should not appear in the detail metafields list
+const HIDDEN_DETAIL_KEYS = new Set(["table_images", "table_text"]);
 
 function visibilityClass(minBreakpoint: string | undefined): string {
   if (!minBreakpoint) return "";
@@ -56,37 +60,105 @@ function getMetafieldValue(
   return field?.value ?? "NA";
 }
 
+type DetailImage = {
+  url: string;
+  altText: string | null;
+  width: number;
+  height: number;
+};
+
+function DetailCarousel({ images, title }: { images: DetailImage[]; title: string }) {
+  const [current, setCurrent] = useState(0);
+
+  const prev = useCallback(() => {
+    setCurrent((n) => (n - 1 + images.length) % images.length);
+  }, [images.length]);
+
+  const next = useCallback(() => {
+    setCurrent((n) => (n + 1) % images.length);
+  }, [images.length]);
+
+  const img = images[current];
+
+  return (
+    <div className="relative w-full overflow-hidden">
+      <Image
+        src={img.url}
+        alt={img.altText ?? title}
+        width={img.width}
+        height={img.height}
+        className="w-full h-auto object-contain"
+      />
+
+      {images.length > 1 && (
+        <>
+          {/* Click zones — same pattern as hero Gallery */}
+          <button
+            type="button"
+            onClick={prev}
+            className="absolute left-0 top-0 h-full w-1/3 cursor-w-resize"
+            aria-label="Previous image"
+          />
+          <button
+            type="button"
+            onClick={next}
+            className="absolute right-0 top-0 h-full w-2/3 cursor-e-resize"
+            aria-label="Next image"
+          />
+
+          {/* Counter */}
+          <div className="absolute bottom-2 right-3 text-xs text-white mix-blend-difference">
+            {current + 1} / {images.length}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 function ProductDetail({ product }: { product: Product }) {
-  const firstImage = product.images[0] ?? product.featuredImage;
+  // Prefer tableImages metafield; fall back to product images array
+  const tableImages: DetailImage[] =
+    product.tableImages?.references?.edges?.map((edge) => edge.node.image) ?? [];
+  const fallbackImages: DetailImage[] =
+    product.images.length > 0
+      ? product.images
+      : product.featuredImage
+        ? [product.featuredImage]
+        : [];
+  const displayImages = tableImages.length > 0 ? tableImages : fallbackImages;
+
+  // Prefer table_text metafield; fall back to product description HTML
+  const tableTextValue = product.metafields?.find(
+    (mf) => mf?.key === "table_text",
+  )?.value;
 
   return (
     <div className="flex flex-col md:flex-row gap-6 p-6">
-      {/* Left: product image */}
-      {firstImage && (
+      {/* Left: carousel */}
+      {displayImages.length > 0 && (
         <div className="w-full md:w-1/2 flex-shrink-0">
-          <Image
-            src={firstImage.url}
-            alt={firstImage.altText ?? product.title}
-            width={firstImage.width}
-            height={firstImage.height}
-            className="w-full h-auto object-contain"
-          />
+          <DetailCarousel images={displayImages} title={product.title} />
         </div>
       )}
 
-      {/* Right: product info */}
+      {/* Right: product info + table_text or description */}
       <div className="w-full md:w-1/2 space-y-4 text-sm">
         <p className="text-lg font-semibold">{product.title}</p>
         <div>
           {product.metafields
-            .filter((item) => item?.key)
+            .filter((item) => item?.key && !HIDDEN_DETAIL_KEYS.has(item.key))
             .map((field, idx) => (
               <p key={`${field?.key}-${idx}`}>
                 {field?.key ? FIELD_MAPPER[field.key] : "Key"}: {field?.value}
               </p>
             ))}
         </div>
-        <ProductDescription product={product} />
+        {tableTextValue ? (
+          <div className="whitespace-pre-line">{tableTextValue}</div>
+        ) : (
+          <ProductDescription product={product} />
+        )}
       </div>
     </div>
   );
@@ -103,7 +175,8 @@ export function ProductTable({ products }: { products: Product[] }) {
     <table className="w-full border-collapse text-sm">
       <thead>
         <tr className="border-b border-t border-black">
-          <th className="py-2 pl-4 text-left font-normal">Título</th>
+          <th className="py-2 pl-4 text-left font-normal">ID</th>
+          <th className="py-2 text-left font-normal">Título</th>
           {METAFIELD_COLUMNS.map((col) => (
             <th
               key={col.key}
@@ -160,7 +233,8 @@ function ProductTableRow({
           isExpanded ? "text-blue-500" : ""
         }`}
       >
-        <td className="py-2 pl-4">{product.title}</td>
+        <td className="py-2 pl-4">{getMetafieldValue(product.metafields, "id_libro")}</td>
+        <td className="py-2">{product.title}</td>
         {METAFIELD_COLUMNS.map((col) => (
           <td
             key={col.key}
