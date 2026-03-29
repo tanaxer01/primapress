@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { AddToCart } from "@/components/cart/add-to-cart";
 import { ProductDescription } from "@/components/product/product-description";
 import { PriceDisplay } from "@/components/ui/price-display";
 import type { Product } from "@/lib/shopify/types";
@@ -145,6 +146,13 @@ function ProductDetail({ product }: { product: Product }) {
       {/* Right: product info + table_text or description */}
       <div className="w-full md:w-1/2 space-y-4 text-sm">
         <p className="text-lg font-semibold">{product.title}</p>
+        <Link
+          href={`/product/${product.handle}`}
+          className="inline-block font-bold underline underline-offset-2 hover:text-blue-600"
+          onClick={(e) => e.stopPropagation()}
+        >
+          Comprar
+        </Link>
         <div>
           {product.metafields
             .filter((item) => item?.key && !HIDDEN_DETAIL_KEYS.has(item.key))
