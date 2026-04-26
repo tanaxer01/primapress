@@ -46,7 +46,7 @@ const FIELD_MAPPER: Record<string, string> = {
 };
 
 // Keys that are used internally but should not appear in the detail metafields list
-const HIDDEN_DETAIL_KEYS = new Set(["table_images", "table_text"]);
+const HIDDEN_DETAIL_KEYS = new Set(["table_images", "table_text", "catalog_front", "catalog_back"]);
 
 function visibilityClass(minBreakpoint: string | undefined): string {
   if (!minBreakpoint) return "";

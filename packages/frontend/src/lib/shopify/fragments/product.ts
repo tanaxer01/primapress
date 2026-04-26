@@ -112,6 +112,30 @@ const productFragment = /* GraphQL */ `
         }
       }
     }
+    catalogFront: metafield(namespace: "custom", key: "catalog_front") {
+      reference {
+        ... on MediaImage {
+          image {
+            url
+            altText
+            width
+            height
+          }
+        }
+      }
+    }
+    catalogBack: metafield(namespace: "custom", key: "catalog_back") {
+      reference {
+        ... on MediaImage {
+          image {
+            url
+            altText
+            width
+            height
+          }
+        }
+      }
+    }
     tags
     updatedAt
   }

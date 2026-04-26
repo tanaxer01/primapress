@@ -159,6 +159,26 @@ export type ShopifyProduct = {
       }>;
     };
   } | null;
+  catalogFront?: {
+    reference: {
+      image: {
+        url: string;
+        altText: string | null;
+        width: number;
+        height: number;
+      };
+    };
+  } | null;
+  catalogBack?: {
+    reference: {
+      image: {
+        url: string;
+        altText: string | null;
+        width: number;
+        height: number;
+      };
+    };
+  } | null;
 };
 
 export type ShopifyCartOperation = {

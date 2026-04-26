@@ -97,5 +97,19 @@ export const metafieldDefinitions: MetafieldDefinition[] = [
     namespace: "custom",
     type: "single_line_text_field",
     description: "Año de publicación",
-  }
+  },
+  {
+    name: "CatalogFront",
+    key: "catalog_front",
+    namespace: "custom",
+    type: "file_reference",
+    description: "Imagen frontal del catálogo (mostrada en la grilla)",
+  },
+  {
+    name: "CatalogBack",
+    key: "catalog_back",
+    namespace: "custom",
+    type: "file_reference",
+    description: "Imagen trasera del catálogo (mostrada al pasar el cursor)",
+  },
 ];
