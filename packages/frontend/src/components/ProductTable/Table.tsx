@@ -193,20 +193,20 @@ export function ProductTable({ products }: { products: Product[] }) {
 	return (
 		<table className="w-full border-collapse text-sm">
 			<thead>
-				<tr className="border-b border-t border-black">
-					<th className="py-2 pl-4 text-left font-normal">ID</th>
-					<th className="py-2 text-left font-normal">Título</th>
-					{METAFIELD_COLUMNS.map((col) => (
-						<th
-							key={col.key}
-							className={`py-2 text-left font-normal ${visibilityClass(col.minBreakpoint)}`}
-						>
-							{col.label}
-						</th>
-					))}
-					<th className="py-2 text-right font-normal">Precio</th>
-					<th className="py-2 pr-4 text-right font-normal" />
-				</tr>
+			<tr className="border-b border-t border-black">
+				<th className="py-2 px-4 text-left font-normal">ID</th>
+				<th className="py-2 px-4 text-left font-normal">Título</th>
+				{METAFIELD_COLUMNS.map((col) => (
+					<th
+						key={col.key}
+						className={`py-2 px-4 text-left font-normal ${visibilityClass(col.minBreakpoint)}`}
+					>
+						{col.label}
+					</th>
+				))}
+				<th className="py-2 px-4 text-right font-normal">Precio</th>
+				<th className="py-2 px-4 text-right font-normal" />
+			</tr>
 			</thead>
 			<tbody>
 				{products.map((product) => {
@@ -252,25 +252,25 @@ function ProductTableRow({
 					isExpanded ? "text-blue-500" : ""
 				}`}
 			>
-				<td className="py-2 pl-4">
-					{getMetafieldValue(product.metafields, "id_libro")}
+			<td className="py-2 px-4">
+				{getMetafieldValue(product.metafields, "id_libro")}
+			</td>
+			<td className="py-2 px-4">{product.title}</td>
+			{METAFIELD_COLUMNS.map((col) => (
+				<td
+					key={col.key}
+					className={`py-2 px-4 ${visibilityClass(col.minBreakpoint)}`}
+				>
+					{getMetafieldValue(product.metafields, col.key)}
 				</td>
-				<td className="py-2">{product.title}</td>
-				{METAFIELD_COLUMNS.map((col) => (
-					<td
-						key={col.key}
-						className={`py-2 ${visibilityClass(col.minBreakpoint)}`}
-					>
-						{getMetafieldValue(product.metafields, col.key)}
-					</td>
-				))}
-				<td className="py-2 text-right">
-					<PriceDisplay
-						price={product.priceRange.minVariantPrice}
-						compareAtPrice={product.compareAtPriceRange?.minVariantPrice}
-					/>
-				</td>
-				<td className="py-2 pr-4 text-right">
+			))}
+			<td className="py-2 px-4 text-right">
+				<PriceDisplay
+					price={product.priceRange.minVariantPrice}
+					compareAtPrice={product.compareAtPriceRange?.minVariantPrice}
+				/>
+			</td>
+			<td className="py-2 px-4 text-right whitespace-nowrap">
 					<Link
 						href={`/product/${product.handle}`}
 						className="underline underline-offset-2"

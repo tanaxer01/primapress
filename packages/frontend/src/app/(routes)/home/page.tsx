@@ -13,13 +13,22 @@ export default async function HomePage() {
     getAboutUs(),
   ]);
 
+  const sortedProducts = [...products].sort((a, b) => {
+    const aId = a.metafields?.find((mf) => mf?.key === "id_libro")?.value ?? "";
+    const bId = b.metafields?.find((mf) => mf?.key === "id_libro")?.value ?? "";
+    const aNum = parseFloat(aId);
+    const bNum = parseFloat(bId);
+    if (!isNaN(aNum) && !isNaN(bNum)) return bNum - aNum;
+    return bId.localeCompare(aId);
+  });
+
   return (
     <div>
       <Hero
         leftImages={heroGallery?.leftImages}
         rightImages={heroGallery?.rightImages}
       />
-      <ProductTable products={products} />
+      <ProductTable products={sortedProducts} />
       <InfoSection content={aboutUs?.content} />
     </div>
   );
