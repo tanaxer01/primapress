@@ -34,6 +34,7 @@ export default async function ProductPage(props: {
             alt={item.altText ?? ""}
             width={item.width}
             height={item.height}
+            sizes="(max-width: 768px) 100vw, 60vw"
           />
         ))}
       </div>
