@@ -92,14 +92,13 @@ function DetailCarousel({
 	const img = images[current];
 
 	return (
-		<div className="relative w-full overflow-hidden">
+		<div className="relative w-full h-full overflow-hidden">
 			<Image
 				src={img.url}
 				alt={img.altText ?? title}
-				width={img.width}
-				height={img.height}
-				sizes="(max-width: 768px) 100vw, 50vw"
-				className="w-full h-auto object-contain"
+				fill
+				sizes="(max-width: 768px) 100vw, 60vw"
+				className="object-cover"
 			/>
 
 			{images.length > 1 && (
@@ -147,16 +146,16 @@ function ProductDetail({ product }: { product: Product }) {
 	)?.value;
 
 	return (
-		<div className="flex flex-col md:flex-row gap-6 p-6">
-			{/* Left: carousel */}
+		<div className="flex flex-col md:flex-row gap-6 p-6 md:items-stretch">
+			{/* Left: fills the right column height exactly, crops horizontally if needed */}
 			{displayImages.length > 0 && (
-				<div className="w-full md:w-1/2 flex-shrink-0">
+				<div className="w-full aspect-[5000/4134] md:aspect-auto md:w-3/5 flex-shrink-0 relative">
 					<DetailCarousel images={displayImages} title={product.title} />
 				</div>
 			)}
 
-			{/* Right: product info + table_text or description */}
-			<div className="w-full md:w-1/2 space-y-4 text-sm">
+			{/* Right: content drives the row height */}
+			<div className="w-full md:w-2/5 space-y-4 text-sm">
 				<p className="text-lg font-semibold">{product.title}</p>
 				<Link
 					href={`/product/${product.handle}`}

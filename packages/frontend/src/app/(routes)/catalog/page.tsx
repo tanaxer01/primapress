@@ -20,7 +20,7 @@ export default async function CatalogPage() {
         return (
           <Link key={item.id} href={`/product/${item.handle}`}>
             {/* Container locked to the native 4500×3417 ratio of the catalog images */}
-            <div className="group relative w-full aspect-[4500/3417] border border-black overflow-hidden hover:text-blue-600">
+            <div className="group relative w-full aspect-[4500/3417] border border-black overflow-hidden">
               {/* Front image — always visible, hidden on hover when back exists */}
               <Image
                 className={`object-contain w-full h-full ${backImage ? "group-hover:opacity-0 transition-opacity duration-200" : ""}`}
@@ -43,7 +43,7 @@ export default async function CatalogPage() {
                 />
               )}
 
-              <div className="absolute bottom-1 w-full p-2 flex justify-between items-end">
+              <div className="absolute bottom-1 w-full p-2 flex justify-between items-end text-blue-600 group-hover:text-white transition-colors duration-200">
                 <span>{item.title}</span>
                 <PriceDisplay
                   price={item.priceRange.minVariantPrice}
