@@ -61,17 +61,15 @@ function Gallery({ images }: { images: GalleryImage[] }) {
   }, [images.length]);
 
   return (
-    <div className="relative h-full w-1/2 overflow-hidden bg-neutral-100">
-      <div className="relative h-full w-full">
-        <Image
-          src={images[current].url}
-          alt={images[current].altText ?? ""}
-          fill
-          className="object-cover"
-          sizes="50vw"
-          priority
-        />
-      </div>
+    <div className="relative h-1/2 md:h-full w-full md:w-1/2 overflow-hidden bg-neutral-100">
+      <Image
+        src={images[current].url}
+        alt={images[current].altText ?? ""}
+        fill
+        className="object-cover"
+        sizes="(max-width: 768px) 100vw, 50vw"
+        priority
+      />
 
       {/* Click zones for prev/next */}
       <button
@@ -110,7 +108,7 @@ export function Hero({
   }
 
   return (
-    <section className="relative h-[90vh] w-full flex">
+    <section className="relative h-[90vh] w-full flex flex-col md:flex-row overflow-hidden">
       <Gallery images={left} />
       <Gallery images={right} />
 
