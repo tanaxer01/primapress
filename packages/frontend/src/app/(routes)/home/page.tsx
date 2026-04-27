@@ -18,7 +18,7 @@ export default async function HomePage() {
     const bId = b.metafields?.find((mf) => mf?.key === "id_libro")?.value ?? "";
     const aNum = parseFloat(aId);
     const bNum = parseFloat(bId);
-    if (!isNaN(aNum) && !isNaN(bNum)) return bNum - aNum;
+    if (!Number.isNaN(aNum) && !Number.isNaN(bNum)) return bNum - aNum;
     return bId.localeCompare(aId);
   });
 

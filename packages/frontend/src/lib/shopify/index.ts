@@ -13,10 +13,7 @@ import {
   removeFromCartMutation,
 } from "./mutations/cart";
 import { getCartQuery } from "./queries/cart";
-import {
-  getAboutUsQuery,
-  getHeroGalleryQuery,
-} from "./queries/metaobject";
+import { getAboutUsQuery, getHeroGalleryQuery } from "./queries/metaobject";
 import { getProductQuery, getProductsQuery } from "./queries/product";
 import type {
   AboutUs,
@@ -281,9 +278,7 @@ export async function getHeroGallery(): Promise<HeroGallery | null> {
   const leftField = metaobject.fields.find((f) => f.key === "left_images");
   const rightField = metaobject.fields.find((f) => f.key === "right_images");
 
-  const extractImages = (
-    field: typeof leftField
-  ): GalleryImage[] => {
+  const extractImages = (field: typeof leftField): GalleryImage[] => {
     if (!field?.references) return [];
     return field.references.edges.map((edge) => ({
       url: edge.node.image.url,

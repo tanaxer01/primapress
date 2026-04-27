@@ -318,13 +318,13 @@ export type ShopifyProductsOperation = {
 };
 
 export type ShopifyMetafieldDefinitionInput = {
-  access?: {};
-  capabilities?: {};
-  constraints?: {};
+  access?: Record<string, unknown>;
+  capabilities?: Record<string, unknown>;
+  constraints?: Record<string, unknown>;
   description?: string;
   key: string;
   name: string;
-  ownerType: {};
+  ownerType: Record<string, unknown>;
   pin: boolean;
   type: string;
   validation: [];

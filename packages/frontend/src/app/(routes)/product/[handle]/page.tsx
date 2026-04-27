@@ -14,6 +14,7 @@ export default async function ProductPage(props: {
   if (!product) return notFound();
 
   const fieldMapper: { [key: string]: string } = {
+    ID: "ID",
     autor: "Autor",
     isbn: "Isbn",
     formato: "Formato",

@@ -14,7 +14,8 @@ export default async function CatalogPage() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
       {products.map((item) => {
-        const frontImage = item.catalogFront?.reference?.image ?? item.images[0];
+        const frontImage =
+          item.catalogFront?.reference?.image ?? item.images[0];
         const backImage = item.catalogBack?.reference?.image ?? null;
 
         return (

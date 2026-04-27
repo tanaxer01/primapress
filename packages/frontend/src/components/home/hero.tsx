@@ -8,15 +8,45 @@ import type { GalleryImage } from "@/lib/shopify/types";
 
 // Fallback mock images used when the metaobject has not been populated yet
 const fallbackLeftImages: GalleryImage[] = [
-  { url: "/placeholder-1.jpg", altText: "Gallery left 1", width: 1200, height: 800 },
-  { url: "/placeholder-2.jpg", altText: "Gallery left 2", width: 1200, height: 800 },
-  { url: "/placeholder-3.jpg", altText: "Gallery left 3", width: 1200, height: 800 },
+  {
+    url: "/placeholder-1.jpg",
+    altText: "Gallery left 1",
+    width: 1200,
+    height: 800,
+  },
+  {
+    url: "/placeholder-2.jpg",
+    altText: "Gallery left 2",
+    width: 1200,
+    height: 800,
+  },
+  {
+    url: "/placeholder-3.jpg",
+    altText: "Gallery left 3",
+    width: 1200,
+    height: 800,
+  },
 ];
 
 const fallbackRightImages: GalleryImage[] = [
-  { url: "/placeholder-4.jpg", altText: "Gallery right 1", width: 1200, height: 800 },
-  { url: "/placeholder-5.jpg", altText: "Gallery right 2", width: 1200, height: 800 },
-  { url: "/placeholder-6.jpg", altText: "Gallery right 3", width: 1200, height: 800 },
+  {
+    url: "/placeholder-4.jpg",
+    altText: "Gallery right 1",
+    width: 1200,
+    height: 800,
+  },
+  {
+    url: "/placeholder-5.jpg",
+    altText: "Gallery right 2",
+    width: 1200,
+    height: 800,
+  },
+  {
+    url: "/placeholder-6.jpg",
+    altText: "Gallery right 3",
+    width: 1200,
+    height: 800,
+  },
 ];
 
 function Gallery({ images }: { images: GalleryImage[] }) {
