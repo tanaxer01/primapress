@@ -20,7 +20,7 @@ export function AddToCart({ product }: { product: Product }) {
   return (
     <Button
       variant="link"
-      className="font-bold p-0 hover:text-blue-600"
+      className="p-0 font-bold underline underline-offset-2 hover:text-blue-600"
       disabled={isPending}
       onClick={() => {
         // Optimistic update + open sheet immediately
