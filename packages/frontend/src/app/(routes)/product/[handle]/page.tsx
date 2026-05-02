@@ -27,7 +27,7 @@ export default async function ProductPage(props: {
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
-      <div className="h-screen w-full md:w-[60%] flex flex-col gap-2 no-scrollbar overflow-y-scroll">
+      <div className="h-1/2 md:h-screen w-full md:w-[60%] flex flex-col gap-2 no-scrollbar overflow-y-scroll">
         {product.images.map((item) => (
           <Image
             key={item.id}
@@ -39,7 +39,7 @@ export default async function ProductPage(props: {
           />
         ))}
       </div>
-      <div className="h-[40%] md:h-screen w-full md:w-[40%] p-5 overflow-y-scroll space-y-4">
+      <div className="h-1/2 md:h-screen w-full md:w-[40%] p-5 overflow-y-scroll space-y-4">
         <p className="text-lg font-semibold">{product.title}</p>
         <div className="flex flex-col items-start gap-2">
           <PriceDisplay

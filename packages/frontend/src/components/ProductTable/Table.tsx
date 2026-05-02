@@ -8,8 +8,8 @@ import { ProductDescription } from "@/components/product/product-description";
 import { PriceDisplay } from "@/components/ui/price-display";
 import type { Product } from "@/lib/shopify/types";
 
-// Metafield columns between Título (always visible) and Precio/Más info
-// (always visible). Columns disappear from the RIGHT as the screen shrinks.
+// Metafield columns between Título (always visible) and Precio.
+// The Más info column is hidden on mobile. Columns disappear from the RIGHT as the screen shrinks.
 // The leftmost columns survive longest.
 const METAFIELD_COLUMNS = [
   { key: "autor", label: "Autor", minBreakpoint: undefined },
@@ -29,7 +29,7 @@ const BREAKPOINT_CLASSES: Record<string, string> = {
   xl: "hidden xl:table-cell",
 };
 
-// Total number of visible columns: ID + Título + metafields + Precio + Más info
+// Total number of table columns: ID + Título + metafields + Precio + Más info
 const TOTAL_COLUMNS = 2 + METAFIELD_COLUMNS.length + 2;
 
 const FIELD_MAPPER: Record<string, string> = {
@@ -205,7 +205,7 @@ export function ProductTable({ products }: { products: Product[] }) {
             </th>
           ))}
           <th className="py-2 px-4 text-right font-normal">Precio</th>
-          <th className="py-2 px-4 text-right font-normal" />
+          <th className="hidden sm:table-cell py-2 px-4 text-right font-normal" />
         </tr>
       </thead>
       <tbody>
@@ -270,7 +270,7 @@ function ProductTableRow({
             compareAtPrice={product.compareAtPriceRange?.minVariantPrice}
           />
         </td>
-        <td className="py-2 px-4 text-right whitespace-nowrap">
+        <td className="hidden sm:table-cell py-2 px-4 text-right whitespace-nowrap">
           <Link
             href={`/product/${product.handle}`}
             className="underline underline-offset-2"
