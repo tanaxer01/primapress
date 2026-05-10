@@ -91,7 +91,6 @@ const productFragment = /* GraphQL */ `
       { namespace: "custom", key: "idioma" }
       { namespace: "custom", key: "impresores" }
       { namespace: "custom", key: "ano" }
-      { namespace: "custom", key: "table_text" }
     ]) {
       key
       value
@@ -108,6 +107,18 @@ const productFragment = /* GraphQL */ `
                 height
               }
             }
+          }
+        }
+      }
+    }
+    tableGif: metafield(namespace: "custom", key: "table_gif") {
+      reference {
+        ... on MediaImage {
+          image {
+            url
+            altText
+            width
+            height
           }
         }
       }

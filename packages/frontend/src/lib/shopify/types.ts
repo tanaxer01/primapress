@@ -159,6 +159,16 @@ export type ShopifyProduct = {
       }>;
     };
   } | null;
+  tableGif?: {
+    reference: {
+      image: {
+        url: string;
+        altText: string | null;
+        width: number;
+        height: number;
+      };
+    };
+  } | null;
   catalogFront?: {
     reference: {
       image: {

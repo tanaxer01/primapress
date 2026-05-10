@@ -33,7 +33,6 @@ const BREAKPOINT_CLASSES: Record<string, string> = {
 const TOTAL_COLUMNS = 2 + METAFIELD_COLUMNS.length + 2;
 
 const FIELD_MAPPER: Record<string, string> = {
-  id_libro: "ID",
   autor: "Autor",
   isbn: "Isbn",
   formato: "Formato",
@@ -46,8 +45,9 @@ const FIELD_MAPPER: Record<string, string> = {
 
 // Keys that are used internally but should not appear in the detail metafields list
 const HIDDEN_DETAIL_KEYS = new Set([
+  "id_libro",
   "table_images",
-  "table_text",
+  "table_gif",
   "catalog_front",
   "catalog_back",
 ]);
@@ -140,10 +140,7 @@ function ProductDetail({ product }: { product: Product }) {
         : [];
   const displayImages = tableImages.length > 0 ? tableImages : fallbackImages;
 
-  // Prefer table_text metafield; fall back to product description HTML
-  const tableTextValue = product.metafields?.find(
-    (mf) => mf?.key === "table_text",
-  )?.value;
+  const tableGifImage = product.tableGif?.reference?.image;
 
   return (
     <div className="flex flex-col md:flex-row gap-6 p-6 md:items-stretch">
@@ -173,8 +170,15 @@ function ProductDetail({ product }: { product: Product }) {
               </p>
             ))}
         </div>
-        {tableTextValue ? (
-          <div className="whitespace-pre-line">{tableTextValue}</div>
+        {tableGifImage ? (
+          <Image
+            src={tableGifImage.url}
+            alt={tableGifImage.altText ?? product.title}
+            width={400}
+            height={400}
+            className="object-contain"
+            unoptimized
+          />
         ) : (
           <ProductDescription product={product} />
         )}
@@ -248,9 +252,8 @@ function ProductTableRow({
       <tr
         ref={rowRef}
         onClick={onToggle}
-        className={`border-b border-black cursor-pointer transition-colors hover:text-blue-500 scroll-mt-10 ${
-          isExpanded ? "text-blue-500" : ""
-        }`}
+        className={`border-b border-black cursor-pointer transition-colors hover:text-blue-500 scroll-mt-10 ${isExpanded ? "text-blue-500" : ""
+          }`}
       >
         <td className="py-2 px-4">
           {getMetafieldValue(product.metafields, "id_libro")}

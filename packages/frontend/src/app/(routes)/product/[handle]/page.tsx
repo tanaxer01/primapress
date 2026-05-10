@@ -48,15 +48,6 @@ export default async function ProductPage(props: {
           />
           <AddToCart product={product} />
         </div>
-        <div>
-          {Object.values(product.metafields)
-            .filter((item) => item?.key)
-            .map((field, idx) => (
-              <p key={`${field?.key}-${idx}`}>
-                {field?.key ? fieldMapper[field?.key] : "Key"}: {field?.value}
-              </p>
-            ))}
-        </div>
         <ProductDescription product={product} />
       </div>
     </div>
