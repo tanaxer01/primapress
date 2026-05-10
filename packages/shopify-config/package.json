@@ -7,6 +7,7 @@
   "scripts": {
     "create-metafields": "tsx src/create-metafields.ts",
     "create-metaobjects": "tsx src/create-metaobjects.ts",
+    "delete-metafields": "tsx src/delete-metafields.ts",
     "build": "tsc"
   },
   "dependencies": {

@@ -36,13 +36,6 @@ export const metafieldDefinitions: MetafieldDefinition[] = [
     description: "Imágenes mostradas en la vista de detalle de la tabla",
   },
   {
-    name: "TableText",
-    key: "table_text",
-    namespace: "custom",
-    type: "multi_line_text_field",
-    description: "Texto mostrado en el lado derecho de la vista de detalle de la tabla",
-  },
-  {
     name: "Autor",
     key: "autor",
     namespace: "custom",
@@ -97,6 +90,13 @@ export const metafieldDefinitions: MetafieldDefinition[] = [
     namespace: "custom",
     type: "single_line_text_field",
     description: "Año de publicación",
+  },
+  {
+    name: "TableGif",
+    key: "table_gif",
+    namespace: "custom",
+    type: "file_reference",
+    description: "GIF mostrado debajo de la descripción en la vista de detalle de la tabla",
   },
   {
     name: "CatalogFront",
