@@ -39,7 +39,7 @@ export default async function ProductPage(props: {
           />
         ))}
       </div>
-      <div className="h-1/2 md:h-screen w-full md:w-[40%] p-5 overflow-y-scroll space-y-4">
+      <div className="h-1/2 md:h-screen w-full md:w-[40%] p-5 pr-10  overflow-y-scroll space-y-4">
         <p className="text-lg font-semibold">{product.title}</p>
         <div className="flex flex-col items-start gap-2">
           <PriceDisplay
@@ -48,7 +48,7 @@ export default async function ProductPage(props: {
           />
           <AddToCart product={product} />
         </div>
-        <ProductDescription product={product} />
+        <ProductDescription product={product} className="space-y-2" />
       </div>
     </div>
   );

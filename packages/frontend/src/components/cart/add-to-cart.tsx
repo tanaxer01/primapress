@@ -36,7 +36,7 @@ export function AddToCart({ product }: { product: Product }) {
         });
       }}
     >
-      comprar
+      Comprar
     </Button>
   );
 }

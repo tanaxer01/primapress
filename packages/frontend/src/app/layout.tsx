@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Prima Press",
-  description: "Prima Press - Editorial",
+  title: "primapress",
+  description: "primapress - editorial",
 };
 
 export default function RootLayout({

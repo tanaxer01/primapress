@@ -85,6 +85,13 @@ function Gallery({ images }: { images: GalleryImage[] }) {
         aria-label="Next image"
       />
 
+      {/* Alt text in bottom left corner */}
+      {images[current].altText && (
+        <div className="absolute bottom-4 left-4 text-sm text-white mix-blend-difference">
+          {images[current].altText}
+        </div>
+      )}
+
       {/* Image counter in bottom corner */}
       <div className="absolute bottom-4 right-4 text-sm text-white mix-blend-difference">
         {current + 1} / {images.length}
