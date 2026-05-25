@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "pnpm --filter @prima/frontend dev",
     "create-metafields": "pnpm --filter @prima/shopify-config create-metafields",
+    "create-metafields:prod": "pnpm --filter @prima/shopify-config create-metafields -- --prod",
+    "create-metaobjects": "pnpm --filter @prima/shopify-config create-metaobjects",
+    "create-metaobjects:prod": "pnpm --filter @prima/shopify-config create-metaobjects -- --prod",
     "build": "pnpm -r build"
   }
 }

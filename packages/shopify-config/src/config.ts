@@ -2,8 +2,12 @@ import { resolve } from "node:path";
 import { config } from "dotenv";
 import { z } from "zod/v4";
 
-// Load .env from monorepo root
-config({ path: resolve(import.meta.dirname, "../../../.env") });
+// Load .env.prod or .env.dev from monorepo root depending on --prod flag
+const isProd = process.argv.includes("--prod");
+const envFile = isProd ? ".env.prod" : ".env.dev";
+config({ path: resolve(import.meta.dirname, `../../../${envFile}`) });
+
+console.log(`  Environment: ${isProd ? "production" : "development"} (${envFile})`);
 
 const envSchema = z.object({
   SHOPIFY_SHOP: z
