@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "cdn.shopify.com",
-        pathname: "/s/files/1/0664/6277/7453/files/**",
+        pathname: "/s/files/**",
       },
     ],
   },
