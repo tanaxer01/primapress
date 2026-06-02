@@ -61,7 +61,7 @@ function Gallery({ images }: { images: GalleryImage[] }) {
   }, [images.length]);
 
   return (
-    <div className="relative h-1/2 md:h-full w-full md:w-1/2 overflow-hidden bg-neutral-100">
+    <div className="relative min-h-0 w-full flex-1 overflow-hidden bg-neutral-100">
       <Image
         src={images[current].url}
         alt={images[current].altText ?? ""}
@@ -115,7 +115,7 @@ export function Hero({
   }
 
   return (
-    <section className="relative h-[90vh] w-full flex flex-col md:flex-row overflow-hidden">
+    <section className="relative flex h-[90vh] w-full flex-col gap-2 overflow-hidden p-2 md:flex-row">
       <Gallery images={left} />
       <Gallery images={right} />
 
