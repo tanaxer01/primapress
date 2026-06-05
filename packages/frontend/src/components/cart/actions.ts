@@ -13,6 +13,28 @@ import {
 } from "@/lib/shopify";
 import type { Cart } from "@/lib/shopify/types";
 
+function getCheckoutRedirectUrl(checkoutUrl: string) {
+  const storeDomain = process.env.SHOPIFY_STORE_DOMAIN;
+
+  if (!storeDomain) {
+    return checkoutUrl;
+  }
+
+  try {
+    const checkout = new URL(checkoutUrl);
+    const store = new URL(storeDomain);
+
+    if (checkout.pathname.startsWith("/cart/c/")) {
+      checkout.protocol = store.protocol;
+      checkout.host = store.host;
+    }
+
+    return checkout.toString();
+  } catch {
+    return checkoutUrl;
+  }
+}
+
 export async function addItem(
   selectedVariantId: string | undefined,
 ): Promise<Cart | string> {
@@ -105,7 +127,7 @@ export async function updateItemQuantity(payload: {
 
 export async function redirectToCheckout() {
   const cart = await getCart();
-  redirect(cart!.checkoutUrl);
+  redirect(getCheckoutRedirectUrl(cart!.checkoutUrl));
 }
 
 export async function createCartAndSetCookie() {
